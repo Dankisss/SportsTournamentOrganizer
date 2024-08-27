@@ -2,6 +2,7 @@ package bg.fmi.javaweb.sportstournamentorganizer.service;
 
 import bg.fmi.javaweb.sportstournamentorganizer.dto.TournamentInputDto;
 import bg.fmi.javaweb.sportstournamentorganizer.dto.TournamentOutputDto;
+import bg.fmi.javaweb.sportstournamentorganizer.exception.MatchAlreadyExistsException;
 import bg.fmi.javaweb.sportstournamentorganizer.exception.TournamentAlreadyExistsException;
 import bg.fmi.javaweb.sportstournamentorganizer.exception.TournamentNotFoundException;
 import bg.fmi.javaweb.sportstournamentorganizer.mapper.TournamentMapper;
@@ -48,8 +49,8 @@ public class TournamentService {
 
         Tournament tournament = tournamentMapper.mapFromInputDto(tournamentInputDto);
 
-        if(moderator.getTournaments().stream().anyMatch(tourn -> tournament.getTournamentName()
-                .equals(tourn.getTournamentName()))) {
+        if(moderator.getTournaments().stream().anyMatch(t -> tournament.getTournamentName()
+                .equals(t.getTournamentName()))) {
 
             throw new TournamentAlreadyExistsException(tournament.getTournamentName());
 
@@ -71,6 +72,12 @@ public class TournamentService {
 
     public void checkExistance(Tournament tournament, String host, String guest) {
 //        tournament
+
+       if( tournament.getMatches().stream().anyMatch(match -> match.getHost().getTeamName().equals(host)
+                                                    && match.getGuest().getTeamName().equals(guest))) {
+           throw new MatchAlreadyExistsException(host, guest);
+       }
+
     }
 //    public void addTournament(Tournament tournament) {
 //        tournamentRepository.addTournament(tournament);

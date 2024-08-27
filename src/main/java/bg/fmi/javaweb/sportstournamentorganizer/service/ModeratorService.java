@@ -1,7 +1,7 @@
 package bg.fmi.javaweb.sportstournamentorganizer.service;
 
 import bg.fmi.javaweb.sportstournamentorganizer.dto.*;
-import bg.fmi.javaweb.sportstournamentorganizer.exception.MatchAlreadyExistsException;
+import bg.fmi.javaweb.sportstournamentorganizer.exception.MatchIsCompletedException;
 import bg.fmi.javaweb.sportstournamentorganizer.exception.ModeratorAlreadyExistsException;
 import bg.fmi.javaweb.sportstournamentorganizer.exception.ModeratorNotFoundException;
 import bg.fmi.javaweb.sportstournamentorganizer.mapper.MatchMapper;
@@ -9,7 +9,6 @@ import bg.fmi.javaweb.sportstournamentorganizer.mapper.ModeratorMapper;
 import bg.fmi.javaweb.sportstournamentorganizer.mapper.TournamentMapper;
 import bg.fmi.javaweb.sportstournamentorganizer.model.*;
 import bg.fmi.javaweb.sportstournamentorganizer.repository.ModeratorRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -82,7 +81,7 @@ public class ModeratorService {
         Moderator moderator = moderatorRepository.findById(id)
                 .orElseThrow(() -> new ModeratorNotFoundException(id));
 
-        return moderator.getTournaments().stream().map(tournament -> tournamentMapper.mapToOutputDto(tournament)).toList();
+        return moderator.getTournaments().stream().map(tournamentMapper::mapToOutputDto).toList();
     }
 
     @Transactional
@@ -96,7 +95,7 @@ public class ModeratorService {
         tournaments.remove(removed);
 
         return tournaments.stream().
-                map(tournament -> tournamentMapper.mapToOutputDto(tournament)).toList();
+                map(tournamentMapper::mapToOutputDto).toList();
     }
 
     public TournamentOutputDto addMatch(Long moderatorId, Long tournamentId, MatchInputDto inputDto) {
@@ -119,6 +118,22 @@ public class ModeratorService {
         tournament.getMatches().add(match);
 
         return tournamentService.save(tournament);
+    }
+
+    public MatchOutputDto updateMatchResult(Long moderatorId, Long matchId, boolean isHost) {
+        Match match = matchService.findById(matchId);
+
+        if(match.getMatchStatus().equals(MatchStatus.COMPLETED)) {
+            matchService.save(match);
+            throw new MatchIsCompletedException(match.getHost().getTeamName(), match.getGuest().getTeamName());
+        }
+
+        match.updateMatchResult(isHost);
+        match.serializeResult();
+
+        matchService.save(match);
+
+        return matchMapper.mapToOutputDto(match);
     }
 
 //    public void updateModerator(Moderator moderator) {

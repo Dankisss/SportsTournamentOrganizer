@@ -23,7 +23,7 @@ public class PlayerService {
     }
 
     public PlayerOutputDto findById(Long id) {
-        return convert(playerRepository.findById(id).orElseThrow(() -> new PlayerNotFoundException(id)));
+        return playerMapper.mapToOutputDto(playerRepository.findById(id).orElseThrow(() -> new PlayerNotFoundException(id)));
     }
 
     public Player findByUsername(String username) {
@@ -32,16 +32,16 @@ public class PlayerService {
     }
 
     public PlayerOutputDto findByUsernameAsDto(String username) {
-        return convert(findByUsername(username));
+        return playerMapper.mapToOutputDto(findByUsername(username));
     }
 
     public List<PlayerOutputDto> findAll() {
-        return playerRepository.findAll().stream().map(player -> convert(player)).toList();
+        return playerRepository.findAll().stream().map(playerMapper::mapToOutputDto).toList();
     }
 
     public PlayerOutputDto createPlayer(PlayerInputDto playerInputDto) {
-        Player player = convert(playerInputDto);
-        return convert(playerRepository.save(player));
+        Player player = playerMapper.mapFromInputDto(playerInputDto);
+        return playerMapper.mapToOutputDto(playerRepository.save(player));
     }
 
     @Transactional(readOnly = true)
@@ -50,21 +50,12 @@ public class PlayerService {
 
         player.setUsername(username);
 
-        return convert(playerRepository.save(player));
+        return playerMapper.mapToOutputDto(playerRepository.save(player));
     }
 
     public boolean existsByUsername(String username) {
         return playerRepository.existsByUsername(username);
     }
-
-    private PlayerOutputDto convert(Player player) {
-        return playerMapper.mapToOutputDto(player);
-    }
-
-    private Player convert(PlayerInputDto playerInputDto) {
-        return playerMapper.mapFromInputDto(playerInputDto);
-    }
-
 
 //    private PlayerRepository playerRepository = new PlayerRepository();
 //

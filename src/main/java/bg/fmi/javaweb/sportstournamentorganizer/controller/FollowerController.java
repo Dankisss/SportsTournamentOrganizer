@@ -5,6 +5,7 @@ import bg.fmi.javaweb.sportstournamentorganizer.dto.FollowerOutputDto;
 import bg.fmi.javaweb.sportstournamentorganizer.dto.TeamOutputDto;
 import bg.fmi.javaweb.sportstournamentorganizer.service.FollowerService;
 import jakarta.validation.constraints.NotEmpty;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -32,12 +33,12 @@ public class FollowerController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<FollowerOutputDto> getFollower(@PathVariable @NotEmpty Long id) {
+    public ResponseEntity<FollowerOutputDto> getFollower(@PathVariable @NotNull Long id) {
         return new ResponseEntity<>(followerService.findById(id), HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<FollowerOutputDto> deleteFollower(@PathVariable @NotEmpty Long id) {
+    public ResponseEntity<FollowerOutputDto> deleteFollower(@PathVariable @NotNull Long id) {
         followerService.removeFollower(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
@@ -48,7 +49,7 @@ public class FollowerController {
     }
 
     @GetMapping("/followed-teams")
-    public ResponseEntity<List<TeamOutputDto>> getFollowedTeams(@RequestParam @NotEmpty Long id) {
+    public ResponseEntity<List<TeamOutputDto>> getFollowedTeams(@RequestParam @NotNull Long id) {
         return new ResponseEntity<>(followerService.getFollowedTeams(id), HttpStatus.OK);
 
     }

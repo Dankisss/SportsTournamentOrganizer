@@ -15,14 +15,10 @@ public record MatchInputDto (
     String matchLocation,
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
-    @Pattern(regexp = "^\\d{4}-\\d{2}-\\{2} \\d{2}:\\d{2}:\\d{2}$",
-            message = "The start time of the match is not matching the format")
     @Past(message = "The provided start time must not be in the past")
     LocalDateTime matchStartTime,
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
-    @Pattern(regexp = "^\\d{4}-\\d{2}-\\{2} \\d{2}:\\d{2}:\\d{2}$",
-            message = "The start time of the match is not matching the format")
     @Past(message = "The provided end time must not be in the past")
     LocalDateTime matchEndTime,
 

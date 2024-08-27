@@ -14,4 +14,19 @@ public class BasketballMatch extends Match {
 
     @Transient
     private Integer guestScore;
+
+    @Override
+    public void updateMatchResult(boolean isHost) {
+
+    }
+
+    @Override
+    public void serializeResult() {
+
+    }
+
+    @Override
+    public void deserializeResult() {
+
+    }
 }

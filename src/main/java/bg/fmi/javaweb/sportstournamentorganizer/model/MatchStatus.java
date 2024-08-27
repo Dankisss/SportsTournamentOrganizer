@@ -15,6 +15,4 @@ public enum MatchStatus {
     MatchStatus(String matchStatus) {
         this.matchStatus = matchStatus;
     }
-
-
 }

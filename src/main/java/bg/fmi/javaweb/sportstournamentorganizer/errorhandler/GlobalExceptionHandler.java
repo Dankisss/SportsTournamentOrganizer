@@ -69,4 +69,17 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
     }
 
+    @ExceptionHandler(MatchIsCompletedException.class)
+    public ResponseEntity<ErrorResponse> handleMatchIsCompletedException(MatchIsCompletedException e, HttpServletRequest httpServletRequest) {
+        ErrorResponse errorResponse = new ErrorResponse(
+                LocalDateTime.now(),
+                HttpStatus.CONFLICT.value(),
+                httpServletRequest.getRequestURI(),
+                e.getMessage(),
+                HttpStatus.CONFLICT.getReasonPhrase()
+        );
+
+        return new ResponseEntity<>(errorResponse, HttpStatus.CONFLICT);
+    }
+
 }

@@ -23,6 +23,10 @@ public class MatchService {
     }
 
     public Match findById(Long matchId) {
+        Match match = matchRepository.findById(matchId)
+                .orElseThrow(() -> new MatchNotFoundException(matchId));
+
+        match.deserializeResult();
         return matchRepository.findById(matchId)
                 .orElseThrow(() -> new MatchNotFoundException(matchId));
     }
@@ -42,20 +46,6 @@ public class MatchService {
 //    }
     public Match createMatch(MatchInputDto matchInputDto, SportType sportType, Team host, Team guest) {
         return matchMapper.mapFromInputDto(matchInputDto, sportType, host, guest);
-    }
-
-    private MatchOutputDto updateFootball(Match match, Boolean isHost) {
-        FootballMatch footballMatch = (FootballMatch) match;
-
-        if(isHost) {
-            footballMatch.setHostGoals(footballMatch.getHostGoals() + 1);
-        }else {
-            footballMatch.setGuestGoals(footballMatch.getGuestGoals() + 1);
-        }
-
-        footballMatch.setResult(footballMatch.getHostGoals() + " - " + footballMatch.getGuestGoals());
-
-        return matchMapper.mapToOutputDto(matchRepository.save(footballMatch));
     }
 
     public void setMatchStatus(Match match) {

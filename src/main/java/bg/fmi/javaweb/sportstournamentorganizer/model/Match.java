@@ -66,4 +66,7 @@
             this.result = "0-0";
         }
 
+        public abstract void updateMatchResult(boolean isHost);
+        public abstract void serializeResult();
+        public abstract void deserializeResult();
     }

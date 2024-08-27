@@ -21,7 +21,7 @@ public class TournamentController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<TournamentOutputDto> createTournament(@RequestBody @NotEmpty TournamentInputDto tournamentInputDto) {
+    public ResponseEntity<TournamentOutputDto> createTournament(@RequestBody TournamentInputDto tournamentInputDto) {
         return new ResponseEntity<>(tournamentService.create(tournamentInputDto), HttpStatus.OK);
     }
 }

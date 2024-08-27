@@ -5,6 +5,7 @@ import bg.fmi.javaweb.sportstournamentorganizer.dto.TeamInputDto;
 import bg.fmi.javaweb.sportstournamentorganizer.dto.TeamOutputDto;
 import bg.fmi.javaweb.sportstournamentorganizer.service.TeamService;
 import jakarta.validation.constraints.NotEmpty;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.http.HttpStatus;
@@ -28,17 +29,17 @@ public class TeamController {
     }
 
     @GetMapping("/get-team")
-    public ResponseEntity<TeamOutputDto> findById(@RequestParam @NotEmpty Long id) {
+    public ResponseEntity<TeamOutputDto> findById(@RequestParam @NotNull Long id) {
         return new ResponseEntity<>(teamService.findById(id), HttpStatus.OK);
     }
 
     @GetMapping("/teamName/{teamName}")
-    public ResponseEntity<TeamOutputDto> findByTeamName(@PathVariable @NotEmpty String teamName) {
+    public ResponseEntity<TeamOutputDto> findByTeamName(@PathVariable @NotNull String teamName) {
         return new ResponseEntity<>(teamService.findByTeamNameToDto(teamName), HttpStatus.OK);
     }
 
     @PatchMapping("/addPlayer")
-    public ResponseEntity<TeamOutputDto> addPlayer(@RequestParam @NotEmpty Long id, @RequestBody @Validated PlayerInputDto playerInputDto) {
+    public ResponseEntity<TeamOutputDto> addPlayer(@RequestParam @NotNull Long id, @RequestBody @Validated PlayerInputDto playerInputDto) {
         return new ResponseEntity<>(teamService.addPlayer(id, playerInputDto), HttpStatus.OK);
     }
 
