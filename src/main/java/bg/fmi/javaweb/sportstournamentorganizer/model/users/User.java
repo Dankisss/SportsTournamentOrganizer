@@ -1,4 +1,4 @@
-package bg.fmi.javaweb.sportstournamentorganizer.model;
+package bg.fmi.javaweb.sportstournamentorganizer.model.users;
 
 
 import jakarta.persistence.*;
@@ -21,6 +21,9 @@ public abstract class User {
     private String password;
     private String shortDescription;
     //private MessageBox messageBox;
+
+    @Enumerated(EnumType.STRING)
+    private Role role;
 
     @Override
     public int hashCode() {

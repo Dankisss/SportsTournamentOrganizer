@@ -4,12 +4,10 @@ import bg.fmi.javaweb.sportstournamentorganizer.dto.PlayerOutputDto;
 import bg.fmi.javaweb.sportstournamentorganizer.dto.TeamInputDto;
 import bg.fmi.javaweb.sportstournamentorganizer.dto.TeamOutputDto;
 
-import bg.fmi.javaweb.sportstournamentorganizer.model.Player;
+import bg.fmi.javaweb.sportstournamentorganizer.model.users.Player;
 import bg.fmi.javaweb.sportstournamentorganizer.model.Team;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-
-import java.util.List;
 
 @Mapper(componentModel = "spring")
 public interface TeamMapper {

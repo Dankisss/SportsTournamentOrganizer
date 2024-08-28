@@ -1,12 +1,14 @@
 package bg.fmi.javaweb.sportstournamentorganizer.model;
 
+import bg.fmi.javaweb.sportstournamentorganizer.model.users.Follower;
+import bg.fmi.javaweb.sportstournamentorganizer.model.users.Manager;
+import bg.fmi.javaweb.sportstournamentorganizer.model.users.Player;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.context.annotation.Lazy;
 
-import java.util.List;
 import java.util.Set;
 
 @Entity(name = "teams")

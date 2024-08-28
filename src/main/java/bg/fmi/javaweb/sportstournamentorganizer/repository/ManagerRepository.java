@@ -1,16 +1,9 @@
 package bg.fmi.javaweb.sportstournamentorganizer.repository;
 
-import bg.fmi.javaweb.sportstournamentorganizer.model.Manager;
-import bg.fmi.javaweb.sportstournamentorganizer.model.MessageBox;
-import bg.fmi.javaweb.sportstournamentorganizer.model.Team;
-import bg.fmi.javaweb.sportstournamentorganizer.repository.sequence.UserSequence;
-import org.springframework.data.domain.Example;
+import bg.fmi.javaweb.sportstournamentorganizer.model.users.Manager;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 @Repository

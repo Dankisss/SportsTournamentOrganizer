@@ -3,7 +3,7 @@ package bg.fmi.javaweb.sportstournamentorganizer.mapper;
 
 import bg.fmi.javaweb.sportstournamentorganizer.dto.ModeratorInputDto;
 import bg.fmi.javaweb.sportstournamentorganizer.dto.ModeratorOutputDto;
-import bg.fmi.javaweb.sportstournamentorganizer.model.Moderator;
+import bg.fmi.javaweb.sportstournamentorganizer.model.users.Moderator;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 

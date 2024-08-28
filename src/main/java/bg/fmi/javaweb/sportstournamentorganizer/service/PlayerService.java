@@ -4,9 +4,8 @@ import bg.fmi.javaweb.sportstournamentorganizer.dto.PlayerInputDto;
 import bg.fmi.javaweb.sportstournamentorganizer.dto.PlayerOutputDto;
 import bg.fmi.javaweb.sportstournamentorganizer.exception.PlayerNotFoundException;
 import bg.fmi.javaweb.sportstournamentorganizer.mapper.PlayerMapper;
-import bg.fmi.javaweb.sportstournamentorganizer.model.Player;
+import bg.fmi.javaweb.sportstournamentorganizer.model.users.Player;
 import bg.fmi.javaweb.sportstournamentorganizer.repository.PlayerRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

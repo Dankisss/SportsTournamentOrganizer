@@ -1,6 +1,8 @@
-package bg.fmi.javaweb.sportstournamentorganizer.model;
+package bg.fmi.javaweb.sportstournamentorganizer.model.users;
 
 
+import bg.fmi.javaweb.sportstournamentorganizer.model.Team;
+import bg.fmi.javaweb.sportstournamentorganizer.model.users.User;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToOne;
 import lombok.Getter;
@@ -11,8 +13,11 @@ import lombok.Setter;
 @Setter
 @Getter
 @Entity(name = "managers")
-@NoArgsConstructor
-public class Manager extends User{
+public class Manager extends User {
+
+    public Manager() {
+        super.setRole(Role.Manager);
+    }
 
     @OneToOne(mappedBy = "manager")
     private Team teamToManage;

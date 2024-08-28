@@ -1,5 +1,7 @@
 package bg.fmi.javaweb.sportstournamentorganizer.model;
 
+import bg.fmi.javaweb.sportstournamentorganizer.model.users.User;
+
 import java.util.List;
 
 public class MessageBox {

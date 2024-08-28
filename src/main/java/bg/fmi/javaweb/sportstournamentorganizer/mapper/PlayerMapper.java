@@ -3,12 +3,10 @@ package bg.fmi.javaweb.sportstournamentorganizer.mapper;
 
 import bg.fmi.javaweb.sportstournamentorganizer.dto.PlayerInputDto;
 import bg.fmi.javaweb.sportstournamentorganizer.dto.PlayerOutputDto;
-import bg.fmi.javaweb.sportstournamentorganizer.model.Player;
+import bg.fmi.javaweb.sportstournamentorganizer.model.users.Player;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
-
-import java.util.List;
 
 @Mapper(componentModel = "spring")
 public interface PlayerMapper {

@@ -1,9 +1,7 @@
 package bg.fmi.javaweb.sportstournamentorganizer;
 
-import bg.fmi.javaweb.sportstournamentorganizer.controller.TeamController;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.ApplicationContext;
 
 
 //TODO:

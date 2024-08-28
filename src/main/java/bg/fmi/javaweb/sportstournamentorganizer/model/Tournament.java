@@ -1,6 +1,8 @@
 package bg.fmi.javaweb.sportstournamentorganizer.model;
 
 
+import bg.fmi.javaweb.sportstournamentorganizer.model.users.Follower;
+import bg.fmi.javaweb.sportstournamentorganizer.model.users.Moderator;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -9,7 +11,6 @@ import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.Set;
 
 @Getter

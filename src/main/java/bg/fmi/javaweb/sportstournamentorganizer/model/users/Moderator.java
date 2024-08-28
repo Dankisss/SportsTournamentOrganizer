@@ -1,21 +1,24 @@
-package bg.fmi.javaweb.sportstournamentorganizer.model;
+package bg.fmi.javaweb.sportstournamentorganizer.model.users;
 
 
+import bg.fmi.javaweb.sportstournamentorganizer.model.Tournament;
+import bg.fmi.javaweb.sportstournamentorganizer.model.users.User;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
-import jakarta.persistence.OneToOne;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.List;
 import java.util.Set;
 
 @Setter
 @Getter
 @Entity(name = "moderators")
-@NoArgsConstructor
-public class Moderator extends User{
+public class Moderator extends User {
+
+    public Moderator() {
+        super.setRole(Role.Moderator);
+    }
 
     @OneToMany(mappedBy = "tournamentModerator")
     private Set<Tournament> tournaments;

@@ -6,12 +6,11 @@ import bg.fmi.javaweb.sportstournamentorganizer.dto.TeamOutputDto;
 import bg.fmi.javaweb.sportstournamentorganizer.exception.*;
 import bg.fmi.javaweb.sportstournamentorganizer.mapper.PlayerMapper;
 import bg.fmi.javaweb.sportstournamentorganizer.mapper.TeamMapper;
-import bg.fmi.javaweb.sportstournamentorganizer.model.Manager;
-import bg.fmi.javaweb.sportstournamentorganizer.model.Player;
+import bg.fmi.javaweb.sportstournamentorganizer.model.users.Manager;
+import bg.fmi.javaweb.sportstournamentorganizer.model.users.Player;
 import bg.fmi.javaweb.sportstournamentorganizer.model.Team;
 import bg.fmi.javaweb.sportstournamentorganizer.model.Tournament;
 import bg.fmi.javaweb.sportstournamentorganizer.repository.TeamRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

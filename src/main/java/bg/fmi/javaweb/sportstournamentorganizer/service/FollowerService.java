@@ -8,14 +8,11 @@ import bg.fmi.javaweb.sportstournamentorganizer.exception.FollowerNotFoundExcept
 import bg.fmi.javaweb.sportstournamentorganizer.exception.TeamNotFoundException;
 import bg.fmi.javaweb.sportstournamentorganizer.mapper.FollowerMapper;
 import bg.fmi.javaweb.sportstournamentorganizer.mapper.TeamMapper;
-import bg.fmi.javaweb.sportstournamentorganizer.model.Follower;
+import bg.fmi.javaweb.sportstournamentorganizer.model.users.Follower;
 import bg.fmi.javaweb.sportstournamentorganizer.model.Team;
 import bg.fmi.javaweb.sportstournamentorganizer.repository.FollowerRepository;
 import bg.fmi.javaweb.sportstournamentorganizer.repository.TeamRepository;
 import jakarta.transaction.Transactional;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

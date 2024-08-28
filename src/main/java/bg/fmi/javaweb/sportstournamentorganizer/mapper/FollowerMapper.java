@@ -2,13 +2,8 @@ package bg.fmi.javaweb.sportstournamentorganizer.mapper;
 
 import bg.fmi.javaweb.sportstournamentorganizer.dto.FollowerInputDto;
 import bg.fmi.javaweb.sportstournamentorganizer.dto.FollowerOutputDto;
-import bg.fmi.javaweb.sportstournamentorganizer.model.Follower;
-import bg.fmi.javaweb.sportstournamentorganizer.model.Team;
-import bg.fmi.javaweb.sportstournamentorganizer.model.Tournament;
+import bg.fmi.javaweb.sportstournamentorganizer.model.users.Follower;
 import org.mapstruct.*;
-
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Mapper(componentModel = "spring")
 public interface FollowerMapper {

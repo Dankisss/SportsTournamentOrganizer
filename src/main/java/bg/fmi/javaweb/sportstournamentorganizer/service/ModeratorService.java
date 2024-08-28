@@ -8,6 +8,7 @@ import bg.fmi.javaweb.sportstournamentorganizer.mapper.MatchMapper;
 import bg.fmi.javaweb.sportstournamentorganizer.mapper.ModeratorMapper;
 import bg.fmi.javaweb.sportstournamentorganizer.mapper.TournamentMapper;
 import bg.fmi.javaweb.sportstournamentorganizer.model.*;
+import bg.fmi.javaweb.sportstournamentorganizer.model.users.Moderator;
 import bg.fmi.javaweb.sportstournamentorganizer.repository.ModeratorRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

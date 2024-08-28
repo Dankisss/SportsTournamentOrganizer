@@ -6,10 +6,9 @@ import bg.fmi.javaweb.sportstournamentorganizer.exception.MatchAlreadyExistsExce
 import bg.fmi.javaweb.sportstournamentorganizer.exception.TournamentAlreadyExistsException;
 import bg.fmi.javaweb.sportstournamentorganizer.exception.TournamentNotFoundException;
 import bg.fmi.javaweb.sportstournamentorganizer.mapper.TournamentMapper;
-import bg.fmi.javaweb.sportstournamentorganizer.model.Moderator;
+import bg.fmi.javaweb.sportstournamentorganizer.model.users.Moderator;
 import bg.fmi.javaweb.sportstournamentorganizer.model.Tournament;
 import bg.fmi.javaweb.sportstournamentorganizer.repository.TournamentRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
