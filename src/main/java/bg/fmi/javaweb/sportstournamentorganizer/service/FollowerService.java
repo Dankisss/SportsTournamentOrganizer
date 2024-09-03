@@ -2,6 +2,7 @@ package bg.fmi.javaweb.sportstournamentorganizer.service;
 
 import bg.fmi.javaweb.sportstournamentorganizer.dto.FollowerInputDto;
 import bg.fmi.javaweb.sportstournamentorganizer.dto.FollowerOutputDto;
+import bg.fmi.javaweb.sportstournamentorganizer.dto.RegisterDto;
 import bg.fmi.javaweb.sportstournamentorganizer.dto.TeamOutputDto;
 import bg.fmi.javaweb.sportstournamentorganizer.exception.FollowerAlreadyExistsException;
 import bg.fmi.javaweb.sportstournamentorganizer.exception.FollowerNotFoundException;
@@ -13,6 +14,7 @@ import bg.fmi.javaweb.sportstournamentorganizer.model.Team;
 import bg.fmi.javaweb.sportstournamentorganizer.repository.FollowerRepository;
 import bg.fmi.javaweb.sportstournamentorganizer.repository.TeamRepository;
 import jakarta.transaction.Transactional;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -47,6 +49,16 @@ public class FollowerService {
         }
 
         return followerMapper.mapToOutputDto(followerRepository.save(follower));
+    }
+
+    public void createFollower(RegisterDto registerDto, PasswordEncoder passwordEncoder) {
+        Follower follower = new Follower();
+
+        follower.setUsername(registerDto.username());
+        follower.setEmail(registerDto.email());
+        follower.setPassword(passwordEncoder.encode(registerDto.password()));
+
+        followerRepository.save(follower);
     }
 
     @Transactional

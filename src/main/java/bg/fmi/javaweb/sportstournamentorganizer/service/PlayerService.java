@@ -2,10 +2,12 @@ package bg.fmi.javaweb.sportstournamentorganizer.service;
 
 import bg.fmi.javaweb.sportstournamentorganizer.dto.PlayerInputDto;
 import bg.fmi.javaweb.sportstournamentorganizer.dto.PlayerOutputDto;
+import bg.fmi.javaweb.sportstournamentorganizer.dto.RegisterDto;
 import bg.fmi.javaweb.sportstournamentorganizer.exception.PlayerNotFoundException;
 import bg.fmi.javaweb.sportstournamentorganizer.mapper.PlayerMapper;
 import bg.fmi.javaweb.sportstournamentorganizer.model.users.Player;
 import bg.fmi.javaweb.sportstournamentorganizer.repository.PlayerRepository;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -30,6 +32,10 @@ public class PlayerService {
 
     }
 
+    public boolean existsByEmail(String email) {
+        return playerRepository.existsByEmail(email);
+    }
+
     public PlayerOutputDto findByUsernameAsDto(String username) {
         return playerMapper.mapToOutputDto(findByUsername(username));
     }
@@ -43,6 +49,15 @@ public class PlayerService {
         return playerMapper.mapToOutputDto(playerRepository.save(player));
     }
 
+    public void createPlayer(RegisterDto registerDto, PasswordEncoder passwordEncoder) {
+        Player player = new Player();
+
+         player.setUsername(registerDto.username());
+         player.setEmail(registerDto.email());
+         player.setPassword(passwordEncoder.encode(registerDto.password()));
+
+         playerRepository.save(player);
+    }
     @Transactional(readOnly = true)
     public PlayerOutputDto updateUsername(Long id, String username) {
         Player player = playerRepository.findById(id).orElseThrow(() -> new PlayerNotFoundException(id));

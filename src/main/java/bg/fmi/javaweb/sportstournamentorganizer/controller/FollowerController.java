@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.List;
 
 @RestController
@@ -44,14 +45,13 @@ public class FollowerController {
     }
 
     @PostMapping("/follow")
-    public ResponseEntity<FollowerOutputDto> followTeam(@RequestParam @NotEmpty String followerName, @RequestParam @NotEmpty String teamName) {
-        return new ResponseEntity<>(followerService.follow(followerName, teamName), HttpStatus.OK);
+    public ResponseEntity<FollowerOutputDto> followTeam(@RequestParam @NotEmpty String teamName, Principal principal) {
+        return new ResponseEntity<>(followerService.follow(principal.getName(), teamName), HttpStatus.OK);
     }
 
     @GetMapping("/followed-teams")
     public ResponseEntity<List<TeamOutputDto>> getFollowedTeams(@RequestParam @NotNull Long id) {
         return new ResponseEntity<>(followerService.getFollowedTeams(id), HttpStatus.OK);
-
     }
 
 }

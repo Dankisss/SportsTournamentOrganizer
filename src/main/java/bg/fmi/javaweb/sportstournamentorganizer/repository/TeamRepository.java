@@ -10,7 +10,7 @@ import java.util.Optional;
 public interface TeamRepository extends JpaRepository<Team, Long> {
     Optional<Team> findById(Long id);
     Optional<Team> findByManager_UserId(Long managerId);
-
+    Optional<Team> findByManager_Username(String username);
     Optional<Team> findByTeamName(String teamName);
 
     boolean existsByTeamName(String teamName);

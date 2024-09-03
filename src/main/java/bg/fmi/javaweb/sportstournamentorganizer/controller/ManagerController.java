@@ -5,11 +5,14 @@ import bg.fmi.javaweb.sportstournamentorganizer.dto.*;
 import bg.fmi.javaweb.sportstournamentorganizer.service.ManagerService;
 import jakarta.validation.constraints.NotEmpty;
 import org.jetbrains.annotations.NotNull;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
+import java.security.Principal;
 
 
 @RestController
@@ -28,46 +31,49 @@ public class ManagerController {
         return new ResponseEntity<>(managerService.addManager(managerInputDto), HttpStatus.CREATED);
     }
 
-    @GetMapping("/id/{id}")
-    public ResponseEntity<ManagerOutputDto> getManager(@PathVariable @NotNull Long id) {
-        ManagerOutputDto managerOutputDto = managerService.findById(id);
+    @GetMapping("/show-details")
+    public ResponseEntity<ManagerOutputDto> showDetails(Principal principal) {
+        ManagerOutputDto managerOutputDto = managerService.findManagerByUsernameToDto(principal.getName());
 
         return new ResponseEntity<>(managerOutputDto, HttpStatus.OK);
     }
 
     @GetMapping("/username/{username}")
     public ResponseEntity<ManagerOutputDto> getManagerByUsername(@PathVariable @NotEmpty String username) {
-        ManagerOutputDto managerOutputDto = managerService.getManagerByUsername(username);
+        ManagerOutputDto managerOutputDto = managerService.findManagerByUsernameToDto(username);
 
         return new ResponseEntity<>(managerOutputDto, HttpStatus.OK);
     }
 
-    @GetMapping("/{id}/team")
-    public ResponseEntity<TeamOutputDto> findTeamByManagerId(@PathVariable @NotNull Long id) {
-        return new ResponseEntity<>(managerService.findTeamByManagerId(id), HttpStatus.OK);
+    @GetMapping("/get-team")
+    public ResponseEntity<TeamOutputDto> getTeam(Principal principal) {
+        return new ResponseEntity<>(managerService.findTeamByManagerUsername(principal.getName()), HttpStatus.OK);
     }
 
-
-    @DeleteMapping("/delete/{id}")
-    public ResponseEntity<Void> deleteManager(@PathVariable @NotNull Long id) {
-        managerService.removeManager(id);
+    @DeleteMapping("/delete")
+    public ResponseEntity<Void> deleteManager(Principal principal) {
+        managerService.removeManager(principal.getName());
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-
     @PostMapping("/add-team")
-    public ResponseEntity<ManagerOutputDto> addTeam(@RequestParam @NotNull Long id, @RequestBody @Validated TeamInputDto teamInputDto) {
+    public ResponseEntity<ManagerOutputDto> addTeam(Principal principal, @RequestBody @Validated TeamInputDto teamInputDto) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
-        return new ResponseEntity<>(managerService.addTeam(id, teamInputDto), HttpStatus.OK);
+        return new ResponseEntity<>(managerService.addTeam(principal.getName(), teamInputDto), HttpStatus.OK);
     }
 
     @PatchMapping("/add-player")
-    public ResponseEntity<TeamOutputDto> addPlayerToTeam(@RequestParam @NotNull Long id, @RequestParam @Validated String player) {
-        return new ResponseEntity<>(managerService.addPlayerToTeam(id, player), HttpStatus.OK);
+    public ResponseEntity<TeamOutputDto> addPlayerToTeam(Principal principal, @RequestParam @Validated String player) {
+        return new ResponseEntity<>(managerService.addPlayerToTeam(getUsername(principal), player), HttpStatus.OK);
     }
 
-    @PatchMapping("/add-team-to-tournament")
-    public ResponseEntity<TournamentOutputDto> addTeamToTournament(@RequestParam @NotNull Long managerId, @RequestParam @NotEmpty String tournamentName) {
-        return new ResponseEntity<>(managerService.addTeamToTournament(managerId, tournamentName), HttpStatus.OK);
+    @PatchMapping("/sign-team-to-tournament")
+    public ResponseEntity<TournamentOutputDto> signTeamToTournament(Principal principal, @RequestParam @NotEmpty String tournamentName) {
+        return new ResponseEntity<>(managerService.addTeamToTournament(getUsername(principal), tournamentName), HttpStatus.OK);
+    }
+
+    private String getUsername(@NotNull Principal principal) {
+        return principal.getName();
     }
 }

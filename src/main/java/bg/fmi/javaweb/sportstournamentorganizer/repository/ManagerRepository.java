@@ -14,6 +14,9 @@ public interface ManagerRepository extends JpaRepository<Manager, Long> {
 
     Optional<Manager> findById(Long id);
 
+    boolean existsByEmail(String email);
+    void deleteByUsername(String username);
+
     //    private static Map<Integer, Manager> managerMap = new HashMap<>();
 //
 //    public void addManager(Manager manager) {

@@ -48,6 +48,14 @@ public class TeamService {
 
     }
 
+    public Team findByManager_Username(String username) {
+        return teamRepository.findByManager_Username(username).orElseThrow(() -> new ManagerNotFoundException(username));
+    }
+
+    public TeamOutputDto findByManager_UsernameToDto(String username) {
+        return teamMapper.mapToOutputDto(findByManager_Username(username));
+    }
+
     public Team addTeam(Manager manager, TeamInputDto teamInputDto) {
         if(teamRepository.findByManager_UserId(manager.getUserId()).isPresent()) {
             throw new ManagerAlreadyExistsException(manager.getUserId());
@@ -72,13 +80,9 @@ public class TeamService {
         return teamMapper.mapToOutputDto(findManagerBy_UserId(userId));
     }
 
-    public Team addPlayerToTeam(Long id, String username) {
-        Team team = teamRepository.findByManager_UserId(id)
-                .orElseThrow(() -> new ManagerNotFoundException(id));
-
-        if(!playerService.existsByUsername(username)) {
-            throw new PlayerNotFoundException(username);
-        }
+    public Team addPlayerToTeam(String managerUsername, String username) {
+        Team team = teamRepository.findByManager_Username(managerUsername)
+                .orElseThrow(() -> new ManagerNotFoundException(managerUsername));
 
         Player player = playerService.findByUsername(username);
         player.setPlayerTeam(team);

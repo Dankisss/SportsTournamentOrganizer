@@ -2,11 +2,9 @@ package bg.fmi.javaweb.sportstournamentorganizer.model.users;
 
 
 import bg.fmi.javaweb.sportstournamentorganizer.model.Tournament;
-import bg.fmi.javaweb.sportstournamentorganizer.model.users.User;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.Set;
@@ -17,7 +15,7 @@ import java.util.Set;
 public class Moderator extends User {
 
     public Moderator() {
-        super.setRole(Role.Moderator);
+        super.setRole(Role.MODERATOR);
     }
 
     @OneToMany(mappedBy = "tournamentModerator")

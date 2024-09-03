@@ -14,7 +14,7 @@ public interface ModeratorRepository extends JpaRepository<Moderator, Long> {
     //Optional<Moderator> findTournamentBy_TournamentId(Long tournament_id);
     boolean existsByUsername(String username);
 
-
+    boolean existsByEmail(String email);
 //    private static Map<Integer, Moderator> moderatorMap = new HashMap<>();
 //
 //    public void addModerator(Moderator moderator) {

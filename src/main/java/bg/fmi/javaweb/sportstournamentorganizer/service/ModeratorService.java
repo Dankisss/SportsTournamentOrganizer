@@ -10,6 +10,7 @@ import bg.fmi.javaweb.sportstournamentorganizer.mapper.TournamentMapper;
 import bg.fmi.javaweb.sportstournamentorganizer.model.*;
 import bg.fmi.javaweb.sportstournamentorganizer.model.users.Moderator;
 import bg.fmi.javaweb.sportstournamentorganizer.repository.ModeratorRepository;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -42,7 +43,6 @@ public class ModeratorService {
         this.teamService = teamService;
     }
 
-    //TODO: Modearator already exists exception
     public ModeratorOutputDto addModerator(ModeratorInputDto moderatorInputDto) {
 
         if(moderatorRepository.existsByUsername(moderatorInputDto.username())) {
@@ -51,6 +51,22 @@ public class ModeratorService {
         Moderator moderator = moderatorMapper.mapFromInputDto(moderatorInputDto);
 
         return moderatorMapper.mapToOutputDto(moderatorRepository.save(moderator));
+    }
+
+    public boolean existsByUsername(String username) {
+        return moderatorRepository.existsByUsername(username);
+    }
+    public boolean existsByEmail(String email) {
+        return moderatorRepository.existsByEmail(email);
+    }
+    public void createModerator(RegisterDto registerDto, PasswordEncoder passwordEncoder) {
+        Moderator moderator = new Moderator();
+
+        moderator.setUsername(registerDto.username());
+        moderator.setEmail(registerDto.email());
+        moderator.setPassword(passwordEncoder.encode(registerDto.password()));
+
+        moderatorRepository.save(moderator);
     }
 
     public void removeModerator(Long id) {

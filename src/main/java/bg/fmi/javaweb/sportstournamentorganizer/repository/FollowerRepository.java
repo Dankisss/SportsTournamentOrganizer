@@ -1,6 +1,7 @@
 package bg.fmi.javaweb.sportstournamentorganizer.repository;
 
 import bg.fmi.javaweb.sportstournamentorganizer.model.users.Follower;
+import bg.fmi.javaweb.sportstournamentorganizer.model.users.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

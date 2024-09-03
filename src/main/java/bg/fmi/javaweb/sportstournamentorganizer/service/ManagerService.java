@@ -10,6 +10,8 @@ import bg.fmi.javaweb.sportstournamentorganizer.model.users.Manager;
 import bg.fmi.javaweb.sportstournamentorganizer.model.Team;
 import bg.fmi.javaweb.sportstournamentorganizer.model.Tournament;
 import bg.fmi.javaweb.sportstournamentorganizer.repository.ManagerRepository;
+import org.jetbrains.annotations.NotNull;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -45,15 +47,16 @@ public class ManagerService {
         return managerMapper.mapToOutputDto(newManager);
     }
 
-
-    public void removeManager(Long id) {
-        managerRepository.deleteById(id);
+    public boolean existsByEmail(String email) {
+        return managerRepository.existsByEmail(email);
     }
 
-    public ManagerOutputDto getManagerByUsername(String username) {
-        ManagerOutputDto managerOutputDto = managerMapper.mapToOutputDto(managerRepository.findByUsername(username).orElseThrow(() -> new ManagerNotFoundException(username)));
+    public void removeManager(String username) {
+        managerRepository.deleteByUsername(username);
+    }
 
-        return managerOutputDto;
+    public ManagerOutputDto findManagerByUsernameToDto(String username) {
+        return managerMapper.mapToOutputDto(findByUsername(username));
     }
 
     @Transactional(readOnly = true)
@@ -64,9 +67,9 @@ public class ManagerService {
     }
 
     @Transactional(readOnly = false)
-    public ManagerOutputDto addTeam(Long id, TeamInputDto teamInputDto) {
-        Manager manager = managerRepository.findById(id)
-                .orElseThrow(() -> new ManagerNotFoundException(id));
+    public ManagerOutputDto addTeam(String username, TeamInputDto teamInputDto) {
+        Manager manager = managerRepository.findByUsername(username)
+                .orElseThrow(() -> new ManagerNotFoundException(username));
 
         Team team = teamService.addTeam(manager, teamInputDto);
 
@@ -79,17 +82,22 @@ public class ManagerService {
         return teamService.findManagerBy_UserIdToDto(id);
     }
 
+    public TeamOutputDto findTeamByManagerUsername(String username) {
+        return teamService.findByManager_UsernameToDto(username);
+    }
     @Transactional
-    public TeamOutputDto addPlayerToTeam(Long id, String player) {
-        Manager manager = managerRepository.findById(id)
-                .orElseThrow(() -> new ManagerNotFoundException(id));
+    public TeamOutputDto addPlayerToTeam(String username, String playerUsername) {
 
-        return teamMapper.mapToOutputDto(teamService.addPlayerToTeam(id, player));
+        if(!existsByUsername(username)) {
+            throw new ManagerNotFoundException(username);
+        }
+
+        return teamMapper.mapToOutputDto(teamService.addPlayerToTeam(username, playerUsername));
     }
 
     @Transactional
-    public TournamentOutputDto addTeamToTournament(Long managerId, String tournamentName) {
-        Team team = teamService.findManagerBy_UserId(managerId);
+    public TournamentOutputDto addTeamToTournament(String managerUsername, String tournamentName) {
+        Team team = teamService.findByManager_Username(managerUsername);
         Tournament tournament = tournamentService.findByTournamentName(tournamentName);
 
         if (!team.getSportType().equals(tournament.getSportType())) {
@@ -102,6 +110,24 @@ public class ManagerService {
         return tournamentService.save(tournament);
     }
 
+    public boolean existsByUsername(String username) {
+        return managerRepository.existsByUsername(username);
+    }
+
+    public void createManager(@NotNull RegisterDto registerDto, @NotNull PasswordEncoder passwordEncoder) {
+        Manager manager = new Manager();
+
+        manager.setUsername(registerDto.username());
+        manager.setEmail(registerDto.email());
+        manager.setPassword(passwordEncoder.encode(registerDto.password()));
+
+        managerRepository.save(manager);
+    }
+
+    public Manager findByUsername(String username) {
+        return managerRepository.findByUsername(username).
+                orElseThrow(() -> new ManagerNotFoundException(username));
+    }
 //    public void updateManager(Manager manager) {
 //        managerRepository.updateManager(manager);
 //    }

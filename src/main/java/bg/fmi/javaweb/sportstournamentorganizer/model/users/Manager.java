@@ -2,11 +2,9 @@ package bg.fmi.javaweb.sportstournamentorganizer.model.users;
 
 
 import bg.fmi.javaweb.sportstournamentorganizer.model.Team;
-import bg.fmi.javaweb.sportstournamentorganizer.model.users.User;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToOne;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 //TODO: add sportType to manager
@@ -16,7 +14,7 @@ import lombok.Setter;
 public class Manager extends User {
 
     public Manager() {
-        super.setRole(Role.Manager);
+        super.setRole(Role.MANAGER);
     }
 
     @OneToOne(mappedBy = "manager")
